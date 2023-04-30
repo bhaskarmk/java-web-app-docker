@@ -3,20 +3,19 @@ apiVersion: v1
 kind: ReplicationController
 metadata:
   labels:
-    name: javawebapp
-  name: java-controller
+    name: javawebappdocker
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        name: javawebapp
+        name: javawebappdocker
     spec:
       containers:
-      - image: dockerhandson/java-web-app
-        name: javawebapp
+      - image: kohlihub/java-web-app:5
+        name: javawebappdocker
         ports:
-        - name: javawebapp
+        - name: javawebappdocker
           containerPort: 8080  
 ---
 # Node Port Service
@@ -24,12 +23,11 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    name: javawebapp
-  name: javawebapp
+    name: javawebappdockersvc
 spec:
   type: NodePort
   ports:
     - port: 8080
       targetPort: 8080
   selector:
-    name: javawebapp
+    name: javawebappdocker
